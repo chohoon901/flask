@@ -21,6 +21,8 @@ jobs:
     # Task의 sequence를 명시한다.
     steps:
       - uses: actions/checkout@v2
+        with:
+            ref: v2
 
       # 3. Docker 이미지 빌드
       - name: docker image build
