@@ -71,4 +71,4 @@ def get_similar_products():
     return result # Return JSON response
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
