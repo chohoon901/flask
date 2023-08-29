@@ -20,12 +20,7 @@ jobs:
 
     # Task의 sequence를 명시한다.
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
+      - uses: actions/checkout@v3
 
       # 3. Docker 이미지 빌드
       - name: docker image build
