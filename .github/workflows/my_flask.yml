@@ -1,0 +1,38 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+# Repo Action 페이지에 나타날 이름
+name: Flask & Gradle CI/CD
+
+# Event Trigger
+# master branch에 push 또는 pull request가 발생할 경우 동작
+# branch 단위 외에도, tag나 cron 식 등을 사용할 수 있음
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    # 실행 환경 지정
+    runs-on: ubuntu-latest
+
+    # Task의 sequence를 명시한다.
+    steps:
+      - uses: actions/checkout@v2
+
+      # 3. Docker 이미지 빌드
+      - name: docker image build
+        run: docker build -t ${{ secrets.DOCKER_USER }}/flask-demo .
+
+      # 4. DockerHub 로그인
+      - name: docker login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 5. Docker Hub 이미지 푸시
+      - name: docker Hub push
+        run: docker push ${{ secrets.DOCKER_USER }}/flask-demo
